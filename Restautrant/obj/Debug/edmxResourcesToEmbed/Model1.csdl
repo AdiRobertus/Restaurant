@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LKSN2018Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="MsEmployee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="128" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Handphone" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="OrderHeader" Relationship="Self.FK__OrderHead__Emplo__1CF15040" FromRole="MsEmployee" ToRole="OrderHeader" />
+  </EntityType>
+  <EntityType Name="MsMember">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Handphone" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="JoinDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="OrderHeader" Relationship="Self.FK__OrderHead__Membe__1BFD2C07" FromRole="MsMember" ToRole="OrderHeader" />
+  </EntityType>
+  <EntityType Name="MsMenu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Carbo" Type="Int32" Nullable="false" />
+    <Property Name="Protein" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="orderDetail" Relationship="Self.FK__orderDeta__Menui__1A14E395" FromRole="MsMenu" ToRole="orderDetail" />
+  </EntityType>
+  <EntityType Name="orderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Orderid" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+    <Property Name="Menuid" Type="Int32" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="MsMenu" Relationship="Self.FK__orderDeta__Menui__1A14E395" FromRole="orderDetail" ToRole="MsMenu" />
+    <NavigationProperty Name="OrderHeader" Relationship="Self.FK__orderDeta__Order__1B0907CE" FromRole="orderDetail" ToRole="OrderHeader" />
+  </EntityType>
+  <EntityType Name="OrderHeader">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Employeeid" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="Memberid" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaymentType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CardNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="Bank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MsEmployee" Relationship="Self.FK__OrderHead__Emplo__1CF15040" FromRole="OrderHeader" ToRole="MsEmployee" />
+    <NavigationProperty Name="MsMember" Relationship="Self.FK__OrderHead__Membe__1BFD2C07" FromRole="OrderHeader" ToRole="MsMember" />
+    <NavigationProperty Name="orderDetail" Relationship="Self.FK__orderDeta__Order__1B0907CE" FromRole="OrderHeader" ToRole="orderDetail" />
+  </EntityType>
+  <Association Name="FK__OrderHead__Emplo__1CF15040">
+    <End Role="MsEmployee" Type="Self.MsEmployee" Multiplicity="0..1" />
+    <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsEmployee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderHeader">
+        <PropertyRef Name="Employeeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderHead__Membe__1BFD2C07">
+    <End Role="MsMember" Type="Self.MsMember" Multiplicity="0..1" />
+    <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsMember">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderHeader">
+        <PropertyRef Name="Memberid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orderDeta__Menui__1A14E395">
+    <End Role="MsMenu" Type="Self.MsMenu" Multiplicity="0..1" />
+    <End Role="orderDetail" Type="Self.orderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsMenu">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orderDetail">
+        <PropertyRef Name="Menuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orderDeta__Order__1B0907CE">
+    <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="0..1" />
+    <End Role="orderDetail" Type="Self.orderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderHeader">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="orderDetail">
+        <PropertyRef Name="Orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LKSN2018Entities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MsEmployee" EntityType="Self.MsEmployee" />
+    <EntitySet Name="MsMember" EntityType="Self.MsMember" />
+    <EntitySet Name="MsMenu" EntityType="Self.MsMenu" />
+    <EntitySet Name="orderDetail" EntityType="Self.orderDetail" />
+    <EntitySet Name="OrderHeader" EntityType="Self.OrderHeader" />
+    <AssociationSet Name="FK__OrderHead__Emplo__1CF15040" Association="Self.FK__OrderHead__Emplo__1CF15040">
+      <End Role="MsEmployee" EntitySet="MsEmployee" />
+      <End Role="OrderHeader" EntitySet="OrderHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderHead__Membe__1BFD2C07" Association="Self.FK__OrderHead__Membe__1BFD2C07">
+      <End Role="MsMember" EntitySet="MsMember" />
+      <End Role="OrderHeader" EntitySet="OrderHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orderDeta__Menui__1A14E395" Association="Self.FK__orderDeta__Menui__1A14E395">
+      <End Role="MsMenu" EntitySet="MsMenu" />
+      <End Role="orderDetail" EntitySet="orderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orderDeta__Order__1B0907CE" Association="Self.FK__orderDeta__Order__1B0907CE">
+      <End Role="OrderHeader" EntitySet="OrderHeader" />
+      <End Role="orderDetail" EntitySet="orderDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

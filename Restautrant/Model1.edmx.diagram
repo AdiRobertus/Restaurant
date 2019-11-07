@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1e91a7de612f4af48f756266db7839e5" Name="Diagram1">
+        <EntityTypeShape EntityType="LKSN2018Model.MsEmployee" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LKSN2018Model.MsMember" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LKSN2018Model.MsMenu" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LKSN2018Model.orderDetail" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LKSN2018Model.OrderHeader" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="LKSN2018Model.FK__OrderHead__Emplo__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="LKSN2018Model.FK__OrderHead__Membe__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="LKSN2018Model.FK__orderDeta__Menui__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="LKSN2018Model.FK__orderDeta__Order__1B0907CE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
